@@ -2,18 +2,31 @@ var express = require('express');
 var router = express.Router();
 var knex = require('knex')(require('./../knexfile'));
 
-/* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  knex('users')
+    .then((rows) => res.json(rows));
 });
 
-router.post('/create', function(req, res, next) {
+router.get('/:id', function(req, res, next) {
+  knex('users')
+    .where('id', req.params.id)
+    .then((result) => res.json(result));
+});
+
+router.post('/', function(req, res, next) {
   knex('users')
     .insert({
       username: req.body.username,
       password: req.body.password,
     })
-    .then((result) => res.send('create a resource'));
-})
+    .then(() => res.sendStatus(200));
+});
+
+router.delete('/:id', function(req, res, next) {
+  knex('users')
+    .where('id', req.params.id)
+    .del()
+    .then(() => res.sendStatus(200));
+});
 
 module.exports = router;
