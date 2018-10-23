@@ -22,3 +22,6 @@ yarn-error.log*
 
 # Lock files
 yarn.lock
+
+# Personal Todo List
+TODO.md
