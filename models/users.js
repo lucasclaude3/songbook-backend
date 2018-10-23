@@ -10,14 +10,28 @@ exports.get = function(id) {
         .where('id', id);
 }
 
-exports.create = function(username, password) {
-    console.log(password);
-    const { salt, hash } = saltHashPassword(password)
+function checkUsername(username) {
     return knex('users')
-        .insert({
-            username: username,
-            salt: salt,
-            encryptedPassword: hash
+        .where('username', username);
+}
+
+exports.create = function(username, password) {
+    return checkUsername(username)
+        .then(result => {
+            console.log(result);
+            if (result.length > 0) {
+                return Promise.reject(new Error('Username already taken'));
+            }
+            return;
+        })
+        .then(() => {
+            const { salt, hash } = saltHashPassword(password);
+            return knex('users')
+                .insert({
+                    username: username,
+                    salt: salt,
+                    encryptedPassword: hash
+                });
         });
 }
 
@@ -30,7 +44,7 @@ exports.delete = function(id) {
 function saltHashPassword(password, salt = randomString()) {
     const hash = crypto
       .createHmac('sha512', salt)
-      .update(password)
+      .update(password);
     return {
       salt,
       hash: hash.digest('hex')
