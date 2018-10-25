@@ -4,6 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var uuid = require('uuid/v4');
+var session = require('express-session');
+const FileStore = require('session-file-store')(session);
+
 var indexController = require('./controllers/index');
 var usersController = require('./controllers/users');
 
@@ -13,6 +17,19 @@ var knex = require('knex')(require('./knexfile'));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+// add & configure middleware
+app.use(session({
+  genid: (req) => {
+    console.log('Inside the session middleware');
+    console.log(req.sessionID);
+    return uuid(); // use UUIDs for session IDs
+  },
+  store: new FileStore(),
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}));
 
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
