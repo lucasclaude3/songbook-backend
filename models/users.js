@@ -18,7 +18,6 @@ function checkUsername(username) {
 exports.create = function(username, password) {
     return checkUsername(username)
         .then(result => {
-            console.log(result);
             if (result.length > 0) {
                 return Promise.reject(new Error('Username already taken'));
             }
