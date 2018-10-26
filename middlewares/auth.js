@@ -35,4 +35,15 @@ passport.deserializeUser((username, done) => {
     .catch(error => done(error, false))
 });
 
-module.exports = passport;
+var isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    res.redirect('/');
+  }
+}
+
+module.exports = {
+  passport: passport,
+  isAuthenticated: isAuthenticated,
+}

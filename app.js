@@ -8,7 +8,7 @@ var uuid = require('uuid/v4');
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 
-var auth = require('./middlewares/auth')
+var { passport } = require('./middlewares/auth');
 
 var indexController = require('./controllers/index');
 var usersController = require('./controllers/users');
@@ -44,8 +44,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(auth.initialize());
-app.use(auth.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexController);
 app.use('/users', usersController);
