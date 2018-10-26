@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var { passport, isAuthenticated } = require('./../middlewares/auth');
+var passport = require('../middlewares/passport');
+var auth = require('../middlewares/auth');
 
 router.get('/', function(req, res, next) {
   res.render('index', { username: 'spy' });
 });
 
-router.get('/logged', isAuthenticated, function(req, res, next) {
+router.get('/logged', auth, function(req, res, next) {
   res.render('index', { username: req.user.username });
 });
 

@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var usersModel = require('./../models/users');
+var auth = require('./../middlewares/auth');
+
+router.use(auth);
 
 router.get('/', function(req, res, next) {
   return usersModel.list()

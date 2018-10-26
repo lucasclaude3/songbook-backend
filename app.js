@@ -8,7 +8,8 @@ var uuid = require('uuid/v4');
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 
-var { passport } = require('./middlewares/auth');
+var passport = require('./middlewares/passport');
+var auth = require('./middlewares/auth');
 
 var indexController = require('./controllers/index');
 var usersController = require('./controllers/users');
