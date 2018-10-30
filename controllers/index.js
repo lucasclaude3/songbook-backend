@@ -12,7 +12,7 @@ router.get('/logged', auth, function(req, res, next) {
 });
 
 router.get('/login', (req, res) => {
-  res.send(`You got the login page!\n`)
+  res.send(`You got the login page!\n`);
 });
 
 router.post('/login', (req, res, next) => {
