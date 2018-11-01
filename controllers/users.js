@@ -17,12 +17,12 @@ router.get('/:id', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   return usersModel.create(req.body.username, req.body.password)
-    .then(() => res.sendStatus(200), error => res.status(403).send(error.message));
+    .then(() => res.status(200).send(), error => res.status(400).send(error.message));
 });
 
 router.delete('/:id', function(req, res, next) {
   return usersModel.delete(req.params.id)
-    .then(() => res.sendStatus(200));
+    .then(() => res.status(200).send());
 });
 
 module.exports = router;

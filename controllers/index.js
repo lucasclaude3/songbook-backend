@@ -17,19 +17,23 @@ router.get('/login', (req, res) => {
 
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
-    if (info) { return res.send(info.message); }
+    if (info) { return res.status(400).send(info.message); }
     if (err) { return next(err); }
-    if (!user) { return res.redirect('/login'); }
+    if (!user) { return res.status(401).send(); }
     req.login(user, (err) => {
       if (err) { return next(err); }
-      return res.redirect('/logged');
+      return res.status(200).send();
     })
   })(req, res, next);
 });
 
+router.get('/me', auth, (req, res, next) => {
+  res.status(200).send(req.user);
+})
+
 router.get('/logout', function(req, res){
   req.logout();
-  res.redirect('/');
+  res.status(200).send();
 });
 
 module.exports = router;
