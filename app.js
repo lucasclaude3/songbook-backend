@@ -13,6 +13,7 @@ var auth = require('./middlewares/auth');
 
 var indexController = require('./controllers/index');
 var usersController = require('./controllers/users');
+var discogsController = require('./controllers/discogs');
 
 var app = express();
 
@@ -50,6 +51,7 @@ app.use(passport.session());
 
 app.use('/', indexController);
 app.use('/users', usersController);
+app.use('/discogs', discogsController);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
