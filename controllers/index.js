@@ -28,10 +28,6 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-router.get('/me', auth, (req, res) => {
-  res.status(200).send(req.user);
-});
-
 router.get('/logout', (req, res) => {
   req.logout();
   res.status(200).send();

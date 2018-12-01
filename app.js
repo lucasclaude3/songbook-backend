@@ -11,6 +11,7 @@ const FileStore = require('session-file-store')(session);
 const passport = require('./middlewares/passport');
 
 const indexController = require('./controllers/index');
+const meController = require('./controllers/me');
 const usersController = require('./controllers/users');
 const songsController = require('./controllers/songs');
 const discogsController = require('./controllers/discogs');
@@ -48,6 +49,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', indexController);
+app.use('/me', meController);
 app.use('/users', usersController);
 app.use('/songs', songsController);
 app.use('/discogs', discogsController);
