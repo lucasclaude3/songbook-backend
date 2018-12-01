@@ -1,27 +1,19 @@
-var knex = require('knex')(require('./../knexfile'));
+const knex = require('knex')(require('./../knexfile'));
 
-exports.list = function() {
-    return knex('songs');
-}
+exports.list = () => knex('songs');
 
-exports.get = function(id) {
-    return knex('songs')
-        .where('id', id);
-}
+exports.get = id => knex('songs')
+  .where('id', id);
 
-exports.create = function(userId, songName, artistName, lyrics, chords) {
-    return knex('songs')
-        .insert({
-            userId: userId,
-            songName: songName,
-            artistName: artistName,
-            lyrics: lyrics,
-            chords: chords
-        });
-}
+exports.create = (userId, songName, artistName, lyrics, chords) => knex('songs')
+  .insert({
+    userId,
+    songName,
+    artistName,
+    lyrics,
+    chords,
+  });
 
-exports.delete = function(id) {
-    return knex('songs')
-        .where('id', id)
-        .del();
-}
+exports.delete = id => knex('songs')
+  .where('id', id)
+  .del();
