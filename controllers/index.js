@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('../middlewares/passport');
 const auth = require('../middlewares/auth');
+const usersModel = require('./../models/users');
 
 const router = express.Router();
 
@@ -31,6 +32,12 @@ router.post('/login', (req, res, next) => {
 router.get('/logout', (req, res) => {
   req.logout();
   res.status(200).send();
+});
+
+router.post('/register', async (req, res) => {
+  const { username, password } = req.body;
+  return usersModel.create(username, password)
+    .then(newUser => res.json(newUser));
 });
 
 module.exports = router;

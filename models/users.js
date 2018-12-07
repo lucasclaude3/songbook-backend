@@ -6,6 +6,17 @@ function checkUsername(username) {
     .where('username', username);
 }
 
+async function insert(username, salt, hash) {
+  return knex('users')
+    .insert({
+      username,
+      salt,
+      encryptedPassword: hash,
+    })
+    .returning('id')
+    .then(id => [id]);
+}
+
 function randomString() {
   return crypto.randomBytes(4).toString('hex');
 }
@@ -34,14 +45,10 @@ exports.create = (username, password) => checkUsername(username)
     }
     return Promise.resolve();
   })
-  .then(() => {
+  .then(async () => {
     const { salt, hash } = saltHashPassword(password);
-    return knex('users')
-      .insert({
-        username,
-        salt,
-        encryptedPassword: hash,
-      });
+    return insert(username, salt, hash)
+      .then(userId => this.get(userId));
   });
 
 exports.delete = id => knex('users')
