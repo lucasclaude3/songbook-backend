@@ -37,7 +37,8 @@ router.get('/logout', (req, res) => {
 router.post('/register', async (req, res) => {
   const { username, password } = req.body;
   return usersModel.create(username, password)
-    .then(newUser => res.json(newUser));
+    .then(newUser => res.json(newUser))
+    .catch(error => res.status(409).send(error.message));
 });
 
 module.exports = router;
