@@ -13,4 +13,7 @@ router.get('/', (req, res) => {
 router.get('/songs', (req, res) => songsModel.listByUser(req.user.id)
   .then(songs => res.json(songs)));
 
+router.post('/songs', (req, res) => songsModel.create(req.user.id, req.body.songName, req.body.artistName, req.body.lyrics, req.body.chords)
+  .then(() => res.status(200).send(), error => res.status(400).send(error.message)));
+
 module.exports = router;

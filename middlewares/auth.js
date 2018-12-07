@@ -1,5 +1,6 @@
 module.exports = (req, res, next) => {
-  if (req.isAuthenticated()) {
+  // OPTIONS preflight request should not check credentials
+  if (req.method === 'OPTIONS' || req.isAuthenticated()) {
     return next();
   }
   return res.status(401).send();
