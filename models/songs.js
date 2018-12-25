@@ -14,7 +14,9 @@ exports.create = (userId, songName, artistName, lyrics, chords) => knex('songs')
     artistName,
     lyrics,
     chords,
-  });
+  })
+  .returning('id')
+  .then(id => [id]);
 
 exports.delete = id => knex('songs')
   .where('id', id)
@@ -24,3 +26,12 @@ exports.delete = id => knex('songs')
 
 exports.listByUser = userId => knex('songs')
   .where('userId', userId);
+
+exports.getByUser = (userId, songId) => knex('songs')
+  .where('userId', userId)
+  .where('id', songId);
+
+exports.deleteByUser = (userId, songId) => knex('songs')
+  .where('userId', userId)
+  .where('id', songId)
+  .del();
