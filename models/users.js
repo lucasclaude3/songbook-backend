@@ -13,8 +13,7 @@ async function insert(username, salt, hash) {
       salt,
       encryptedPassword: hash,
     })
-    .returning('id')
-    .then(id => [id]);
+    .returning('id');
 }
 
 function randomString() {
@@ -48,7 +47,7 @@ exports.create = (username, password) => checkUsername(username)
   .then(async () => {
     const { salt, hash } = saltHashPassword(password);
     return insert(username, salt, hash)
-      .then(userId => this.get(userId));
+      .then(([userId]) => this.get(userId));
   });
 
 exports.delete = id => knex('users')

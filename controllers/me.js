@@ -7,7 +7,7 @@ const auth = require('./../middlewares/auth');
 router.use(auth);
 
 router.get('/', (req, res) => {
-  res.status(200).send(req.user);
+  res.status(200).json(req.user);
 });
 
 router.get('/songs', (req, res) => songsModel.listByUser(req.user.id)
@@ -17,9 +17,9 @@ router.get('/songs/:songId', (req, res) => songsModel.getByUser(req.user.id, req
   .then(song => res.json(song)));
 
 router.post('/songs', (req, res) => songsModel.create(req.user.id, req.body.songName, req.body.artistName, req.body.lyrics, req.body.chords)
-  .then(songId => res.status(200).send(songId), error => res.status(400).send(error.message)));
+  .then(([songId]) => res.status(200).json(songId), error => res.status(400).json(error.message)));
 
 router.delete('/songs', (req, res) => songsModel.deleteByUser(req.user.id, req.body.songId)
-  .then(() => res.status(200).send(), error => res.status(400).send(error.message)));
+  .then(() => res.status(200).json(), error => res.status(400).json(error.message)));
 
 module.exports = router;

@@ -14,31 +14,31 @@ router.get('/logged', auth, (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  res.send('You got the login page!\n');
+  res.json('You got the login page!\n');
 });
 
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
-    if (info) { return res.status(400).send(info.message); }
+    if (info) { return res.status(400).json(info.message); }
     if (err) { return next(err); }
-    if (!user) { return res.status(401).send(); }
+    if (!user) { return res.status(401).json(); }
     return req.login(user, (err2) => {
       if (err2) { return next(err2); }
-      return res.status(200).send();
+      return res.status(200).json();
     });
   })(req, res, next);
 });
 
 router.get('/logout', (req, res) => {
   req.logout();
-  res.status(200).send();
+  res.status(200).json();
 });
 
 router.post('/register', async (req, res) => {
   const { username, password } = req.body;
   return usersModel.create(username, password)
     .then(newUser => res.json(newUser))
-    .catch(error => res.status(409).send(error.message));
+    .catch(error => res.status(409).json(error.message));
 });
 
 module.exports = router;

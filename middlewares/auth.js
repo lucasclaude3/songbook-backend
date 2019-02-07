@@ -3,5 +3,5 @@ module.exports = (req, res, next) => {
   if (req.method === 'OPTIONS' || req.isAuthenticated()) {
     return next();
   }
-  return res.status(401).send();
+  return res.status(401).json();
 };

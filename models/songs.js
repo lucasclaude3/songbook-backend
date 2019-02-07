@@ -15,8 +15,7 @@ exports.create = (userId, songName, artistName, lyrics, chords) => knex('songs')
     lyrics,
     chords,
   })
-  .returning('id')
-  .then(id => [id]);
+  .returning('id');
 
 exports.delete = id => knex('songs')
   .where('id', id)

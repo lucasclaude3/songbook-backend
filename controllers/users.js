@@ -13,9 +13,9 @@ router.get('/:id', (req, res) => usersModel.get(req.params.id)
   .then(user => res.json(user)));
 
 router.post('/', (req, res) => usersModel.create(req.body.username, req.body.password)
-  .then(() => res.status(200).send(), error => res.status(400).send(error.message)));
+  .then(() => res.status(200).json(), error => res.status(400).json(error.message)));
 
 router.delete('/:id', (req, res) => usersModel.delete(req.params.id)
-  .then(() => res.status(200).send()));
+  .then(() => res.status(200).json()));
 
 module.exports = router;
