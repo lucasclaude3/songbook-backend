@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --ignore sessions/ ./bin/www"
+    "start": "nodemon --ignore sessions/ ./bin/www",
+    "test": "mocha tests",
+    "test-with-coverage": "nyc --reporter=text mocha tests"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
