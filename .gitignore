@@ -20,9 +20,6 @@ yarn-error.log*
 *.sln
 *.sw*
 
-# Lock files
-yarn.lock
-
 # Personal Todo List
 TODO.md
 
