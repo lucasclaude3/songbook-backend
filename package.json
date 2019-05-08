@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "nodemon --ignore sessions/ ./bin/www",
-    "test": "mocha tests",
-    "test-with-coverage": "nyc --reporter=text mocha tests"
+    "test": "mocha tests --exit",
+    "test-with-coverage": "nyc --reporter=text mocha tests --exit"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
@@ -29,6 +29,8 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
